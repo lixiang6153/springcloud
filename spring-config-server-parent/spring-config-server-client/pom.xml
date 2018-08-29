@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!-- 项目信息 -->
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>spring-config-server-client</artifactId>
+  <name>配置中心客户端</name>
+  <description>如何使用配置中心文件</description>
+  
+  <!-- 父项目 -->
+  <parent>
+    <groupId>com.easystudy</groupId>
+    <artifactId>spring-config-server-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <!-- 项目依赖 -->
+  <dependencies>
+  	<!-- 中心配置client -->
+  	<dependency>
+	    <groupId>org.springframework.cloud</groupId>
+	    <artifactId>spring-cloud-starter-config</artifactId>
+	</dependency>
+  </dependencies>
+  
+</project>

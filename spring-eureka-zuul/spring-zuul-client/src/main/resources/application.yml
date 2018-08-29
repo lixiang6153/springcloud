@@ -1,0 +1,104 @@
+#多环境通用部分
+spring:
+  application:
+    #服务注册中心测试名
+    name: service-zuul
+    
+#服务器配置
+server:
+  #端口号
+  port: 5000
+
+#ribbon超时时间设置
+ribbon:
+  #设置路由转发请求的时候，创建请求连接的超时时间
+  ReadTimeout: 60000
+  #用来设置路由转发请求的超时时间
+  ConnectTimeout: 60000
+  # 最大重试次数
+  MaxAutoRetries: 3
+  # 重试下一服务次数[排除第一台服务器]
+  MaxAutoRetriesNextServer: 1
+  #eureka:
+    #enabled: false
+    
+#为某个特定服务设置ribbon超时
+#service-a: 
+  #ribbon: 
+    #NIWSServiceListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+    #ListOfServers: http://example.com,http://example2.com
+    #ReadTimeout: 3000
+    #ConnectTimeout: 3000
+    #MaxTotalHttpConnections: 500
+    #MaxConnectionsPerHost: 100
+
+#设置熔断超时
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            #设置API网关中路由转发请求的HystrixCommand执行超时时间
+            #在zuul配置了熔断fallback的话，熔断超时也要配置，不然如果你配置的ribbon超时时间大于熔断的超时，那么会先走熔断，相当于你配的ribbon超时就不生效了
+            #这里面ribbon和hystrix是同时生效的，哪个值小哪个生效，另一个就看不到效果了
+            timeoutInMilliseconds: 60000
+            
+#zuul配置：http://localhost:5000/a/hello?token=1121,http://localhost:5000/b/hello?token=1121
+#Zuul使用Ribbon定位服务注册中的实例, 并且所有的请求都在hystrix的command中执行
+zuul:
+  #限流配置：30秒内允许10个访问，并且要求总请求时间小于20秒
+  #ratelimit:
+  #  key-prefix: your-prefix 
+  #  enabled: true 
+  #  repository: REDIS 
+  #  behind-proxy: true
+  #  policies:
+  #    pig-admin-service:
+  #      limit: 10
+  #      quota: 20
+  #      refresh-interval: 30
+  max:
+    host:
+      #最大连接数connections已经配如下两个新属性代替
+      #总连接数，默认200
+      maxTotalConnections: 500
+      #每个路由连接数，默认20
+      maxPerRouteConnections: 50
+  host:
+    # 这两个和上面的ribbon都是配超时的，区别在于，如果路由方式是serviceId的方式，那么ribbon的生效
+    # 如果是url的方式，则zuul.host开头的生效。（此处重要！使用serviceId路由和url路由是不一样的超时策略）
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+  #系统忽略的服务,除了routes配置的路由
+  ignoredServices: '*'
+  #系统路由表，重点：前端代理路由配置由path指定，后端代理服务既可以由serviceId指定，也可以由url指定（也即是代理后端可以是serviceId也可以是具体的url）
+  routes:
+    #路由a配置
+    api-a:
+      #匹配规则：？-任意单字符，*-任意数量字符，**任意数量字符，支持多级目录, 如/a/?,/a/*,/a/**
+      path: /a/**
+      #serviceId路由：如果是/a/**路径下的请求，则跳转到service-a
+      serviceId: service-a
+      #url路由,简单的"url-routes"不会按照 HystrixCommand执行,也无法通过Ribbon负载均衡多个URLs,
+      #为了实现这一指定服务路由和配置Ribbon客户端,必须在Ribbon中禁用Eureka:ribbon.eureka.enabled=false
+      #url: http://example.com/users_service
+    #路由b配置
+    api-b:
+      #匹配规则：？-任意单字符，*-任意数量字符，**任意数量字符，支持多级目录
+      path: /b/**
+      #serviceId路由：如果是/b/**路径下的请求，则跳转到service-b
+      serviceId: service-b 
+      #url路由,简单的"url-routes"不会按照 HystrixCommand执行,也无法通过Ribbon负载均衡多个URLs,
+      #为了实现这一指定服务路由和配置Ribbon客户端,必须在Ribbon中禁用Eureka:ribbon.eureka.enabled=false
+      #url: http://example.com/users_service
+
+eureka:
+  client:
+    # 是否将eureka自身作为应用注册到eureka注册中心,默认为true
+    registerWithEureka: true
+    service-url:
+      # 这里可以填写所有的eureka服务器地址并以','分离，当前面不能注册时候,自动选择后面的进行注册，排除单点故障问题
+      defaultZone: http://localhost:8761/eureka/ 

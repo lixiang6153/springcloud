@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!-- 项目信息 -->
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>zuul-service-a</artifactId>
+  <name>zuul-service-a</name>
+  <description>zuul-service-a</description>
+  
+  <!-- 父项目 -->
+  <parent>
+    <groupId>com.easystudy</groupId>
+    <artifactId>spring-eureka-zuul</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <!-- 项目强制依赖 -->
+  <dependencies>
+  	<!-- spring cloud 客户注册：服务发现 -->
+	<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+	</dependency>
+  </dependencies>
+</project>

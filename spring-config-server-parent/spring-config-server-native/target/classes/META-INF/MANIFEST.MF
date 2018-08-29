@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: 本地化存储配置中心
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Administrator
+Implementation-Vendor-Id: com.easystudy
+Build-Jdk: 1.8.0_162
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/spring-config-server-parent/spring-config-server-na
+ tive
+Created-By: Maven Integration for Eclipse
+

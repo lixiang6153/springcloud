@@ -1,0 +1,21 @@
+#服务配置
+server:
+  #监听端口
+  port: 7000
+  #服务名称
+  application: 
+    name: config-server
+    
+#spring配置
+spring: 
+  profiles: 
+    #使用本地配置文件存储方式-默认就在resources目录下查找对应配置，当然可以通过如下配置修改
+    active: native
+  #cloud配置
+  cloud: 
+    config: 
+      server: 
+        native: 
+          #search-locations: file:F:/properties/ 
+          #在resource目录下创建config目录,配置clientA-dev.yml,clientA-test.yml等
+          #search-locations: classpath:/config 

@@ -1,0 +1,30 @@
+#服务配置
+server:
+  #监听端口
+  port: 7000
+  #服务名称
+  application: 
+    name: config-server
+    
+#spring配置
+spring: 
+  #cloud配置
+  cloud: 
+    #配置中心
+    config: 
+      #服务器配置
+      server:
+        #git配置 
+        git: 
+          #项目地址
+          uri: https://gitee.com/sand_in_the_shell/config-server
+          #项目文件夹地址
+          searchPaths: blob/
+          #标签/{label}/{application}-{profile}.yml
+          label: master
+          #以上连路径：可以blob/master 或者 searchPaths=blob/且label=master都可以
+          #用户名
+          username: lixiang6153@126.com
+          #密码
+          password: lixiang0806
+          

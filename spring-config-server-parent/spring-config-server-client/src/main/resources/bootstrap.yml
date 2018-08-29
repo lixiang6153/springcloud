@@ -1,0 +1,10 @@
+spring: 
+  #配置中心配置-使用配置中心配置
+  cloud: 
+    config: 
+      #配置中心地址
+      uri: http://localhost:7000/
+      #对应前配置文件中的{application}部分
+      name: lixx
+      #对应前配置文件中的{profile}部分,最后定向到文件：lixx-dev.[properties|yml]
+      profile: dev

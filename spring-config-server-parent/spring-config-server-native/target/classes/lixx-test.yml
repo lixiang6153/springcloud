@@ -1,0 +1,7 @@
+#服务配置
+server:
+  #监听端口
+  port: 7003
+  #服务名称
+  application: 
+    name: config-server-client-test

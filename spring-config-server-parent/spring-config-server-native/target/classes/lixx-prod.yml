@@ -1,0 +1,7 @@
+#服务配置
+server:
+  #监听端口
+  port: 7002
+  #服务名称
+  application: 
+    name: config-server-client-prod
