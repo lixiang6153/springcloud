@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/IMGS/!svn/ver/13/IMGS/src/com/donwait/kafka
+END
+MyKafkaConsumer.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/IMGS/!svn/ver/13/IMGS/src/com/donwait/kafka/MyKafkaConsumer.java
+END
+MyKafkaPartitioner.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/IMGS/!svn/ver/13/IMGS/src/com/donwait/kafka/MyKafkaPartitioner.java
+END
+MyKafkaProducer.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/IMGS/!svn/ver/13/IMGS/src/com/donwait/kafka/MyKafkaProducer.java
+END
+MyKafkaStreams.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/IMGS/!svn/ver/13/IMGS/src/com/donwait/kafka/MyKafkaStreams.java
+END

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/IMGS/!svn/ver/13/IMGS/src/com/donwait/enums
+END
+DeviceType.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/IMGS/!svn/ver/13/IMGS/src/com/donwait/enums/DeviceType.java
+END
+ProfessionTitle.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/IMGS/!svn/ver/13/IMGS/src/com/donwait/enums/ProfessionTitle.java
+END
+SwipeState.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/IMGS/!svn/ver/13/IMGS/src/com/donwait/enums/SwipeState.java
+END
+Sex.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/IMGS/!svn/ver/13/IMGS/src/com/donwait/enums/Sex.java
+END
+UserType.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/IMGS/!svn/ver/13/IMGS/src/com/donwait/enums/UserType.java
+END
+DataType.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/IMGS/!svn/ver/13/IMGS/src/com/donwait/enums/DataType.java
+END
+SubscribeType.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/IMGS/!svn/ver/13/IMGS/src/com/donwait/enums/SubscribeType.java
+END
+SwipeType.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/IMGS/!svn/ver/13/IMGS/src/com/donwait/enums/SwipeType.java
+END

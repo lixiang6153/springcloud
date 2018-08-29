@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 动态方法调用‘!’ -->
+ 	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+ 	<!-- 启动开发模式[修改后自动部署] -->
+    <constant name="struts.devMode" value="false" />
+    <!-- 编码格式 -->
+    <constant name="struts.i18n.encoding" value="utf-8" />
+    <!-- OGNL静态方法访问 -->
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+    <!-- 主题模式 -->
+  	<constant name="struts.ui.theme" value="simple" />
+  	<!-- 文件传输临时目录 -->
+	<constant name="struts.multipart.saveDir" value="javax.servlet.context.tempdir" />
+	
+	<!-- 基本Action配置 -->
+  	<include file="base.xml"></include>
+    <include file="fileAction.xml"></include>
+</struts>

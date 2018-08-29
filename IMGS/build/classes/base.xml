@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 配置全局 -->
+	<package name="base" extends="struts-default">
+		<!-- 定义一个拦截器 -->
+		<interceptors>
+			<interceptor name="actionStack" class="com.donwait.interceptor.ActionInterceptor"></interceptor>
+			<interceptor name="tokenAndSessionStack" class="com.donwait.interceptor.TokenAndSessionInterceptor"></interceptor>
+			<!--定义拦截栈堆栈 -->
+			<interceptor-stack name="MyDefaultStack">
+				<interceptor-ref name="defaultStack"></interceptor-ref>	<!--默认拦截栈 -->
+				<interceptor-ref name="actionStack"></interceptor-ref>
+				<!--自定义拦截栈 
+				<interceptor-ref name="tokenAndSessionStack">			
+				</interceptor-ref>-->
+			</interceptor-stack>
+		</interceptors>
+		<!--设定默认栈 -->
+		<default-interceptor-ref name="MyDefaultStack"></default-interceptor-ref>
+		<!-- 定义全局处理结果 -->
+		<global-results>
+			<result name="success" type="stream">
+				<param name="contentType">text/html;charset=utf-8</param>
+				<param name="inputName">inputStream</param>
+			</result>
+			<result name="error" type="stream">
+				<param name="contentType">text/html;charset=utf-8</param>
+				<param name="inputName">inputStream</param>
+			</result>
+			<result name="login">/html/login.jsp</result>
+		</global-results>
+	</package>
+</struts>

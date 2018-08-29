@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 1配置自定义文件类myRequestParser，继承MultiPartRequest重写 -->
+	<bean type="org.apache.struts2.dispatcher.multipart.MultiPartRequest"
+		name="myRequestParser" class="com.donwait.file.MyJakartaMultiPartRequest"
+		scope="default" optional="true" />
+	 <!-- 注意struts2.3.15.1以前版本这里为struts.multipart.handler， struts2.3.15.1（包含2.3.15.1）这里为struts.multipart.parser-->  
+	<constant name="struts.multipart.parser" value="myRequestParser" />
+	<!-- ajax返回的数据格式化应要text/html,否则会出现 Resource interpreted as Document but transferred with MIME type异常 -->
+	<!-- 2文件上传:大小 限制(默认2M,这里限制为10M) -->
+	<constant name="struts.multipart.maxSize" value="104857600" />
+	<package name="file" namespace="/fileAction" extends="base">
+		<action name="*" class="com.donwait.action.FileAction" method="{1}"></action>
+	</package>
+</struts>

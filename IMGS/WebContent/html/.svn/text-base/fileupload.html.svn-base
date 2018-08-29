@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+</head>
+<body>
+	<form action="${basePath}fileAction/upload" method="post" enctype="multipart/form-data">
+		<input type="file" name="file" placeholder="选择文件">
+		<button>提交</button>
+	</form>
+</body>
+</html>
