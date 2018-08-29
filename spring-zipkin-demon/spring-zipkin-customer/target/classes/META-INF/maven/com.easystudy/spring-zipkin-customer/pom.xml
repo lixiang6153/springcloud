@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!-- 项目基本信息 -->
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>spring-zipkin-customer</artifactId>
+  <name>service customer</name>
+  <description>服务客户端</description>
+  
+  <!-- 父项目 -->
+  <parent>
+    <groupId>com.easystudy</groupId>
+    <artifactId>spring-zipkin-demon</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <!-- 项目强依赖 -->
+  <dependencies>
+  	<!-- spring cloud 客户注册 -->
+	<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+	</dependency>
+	<!-- 负载 -->
+	<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-ribbon</artifactId>
+		<version>1.4.0.RELEASE</version>
+	</dependency>
+  	<!-- 远程调用 feign必须依赖ribbon-->
+	<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-feign</artifactId>
+		<version>1.4.0.RELEASE</version>
+	</dependency>
+	<!-- 添加sleuth全链路依赖 -->
+	<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-sleuth</artifactId>
+	</dependency>
+	<!-- 添加sleuth全链路追踪监控依赖 -->
+	<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-zipkin</artifactId>
+	</dependency>
+  </dependencies>
+  
+</project>

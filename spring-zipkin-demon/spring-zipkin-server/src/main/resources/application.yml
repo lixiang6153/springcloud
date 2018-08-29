@@ -1,0 +1,40 @@
+#服务器端口配置
+server:
+  port: 8672
+  
+spring:
+  application:
+    #应用名称
+    name: zipkin-server
+  datasource:
+    name: zipkin
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name:  com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/zipkin?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: root
+    password: root
+    #会根据脚本创建数据库-测试不会-傻B
+    #配置在数据库创建完以后，可以删除，不然每次都会寻找这个sql，耗费时间
+    #schema: classpath:/mysql.sql
+    #是否启动时候创建数据库
+    initialize: false
+    continue-on-error: true
+
+zipkin:
+  storage:
+    #存储类型为mysql
+    type: mysql
+    
+#spring cloud也提供了spring-cloud-sleuth来方便集成zipkin实现
+#这里表示当前程序不使用sleuth
+#生产过程中调用数据量非常的大，mysql存储并不是很好的选择，
+#这时我们可以采用elasticsearch进行存储
+sleuth:
+  enabled: false
+     
+#去除控制台异常
+management: 
+  metrics: 
+    web: 
+      server: 
+        auto-time-requests: false

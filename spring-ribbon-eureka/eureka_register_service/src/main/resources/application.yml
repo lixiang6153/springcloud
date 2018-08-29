@@ -1,0 +1,28 @@
+# 第一个高可用注册中心
+server:
+  # 指定服务端口 
+  port: 8761
+
+# eureka配置
+eureka:  
+  instance:  
+    hostname: localhost
+  client:
+    # 是否将eureka自身作为应用注册到eureka注册中心【这里设置为false，因为eureka服务和client不可能自己监听两套端口，serviceUrl可以天其他eureka服务地址，实现高可用】
+    registerWithEureka: false 
+    # 为true时，可以启动，但报异常：Cannot execute request on any known server 
+    fetchRegistry: false  
+    serviceUrl:  
+      # 引用对应值，通过配置其他可用的serviceUrl来实现相互注册【高可用配置】，这里可以实现本服务器注册到其他服务器去，实现服务器互为注册功能，达到两个或多个注册中心【即整个系统】的服务提供者信息共享
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    # 关闭自我保护
+    enable-self-preservation: false
+    # 清理服务器
+    eviction-interval-timer-in-ms: 60000
+    
+ # 关闭程序
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: true

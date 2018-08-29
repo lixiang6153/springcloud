@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: 全链路跟踪服务
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Administrator
+Implementation-Vendor-Id: com.easystudy
+Build-Jdk: 1.8.0_162
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/spring-zipkin-demon/spring-zipkin-server-inmemory
+Created-By: Maven Integration for Eclipse
+

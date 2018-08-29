@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.i18n.encoding" value="utf-8" />
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+	<!-- 配置全局 -->
+	<package name="test" namespace="/testAction" extends="struts-default">
+		<action name="*" class="com.ssh.action.TestAction" method="{1}">
+			<result name="success">/success.jsp</result>
+			<result name="testPost">/testPost.jsp</result>
+			<result name="testAjax" type="stream">
+				<param name="contentType">text/html;charset=utf-8</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</action>
+	</package>
+</struts>    

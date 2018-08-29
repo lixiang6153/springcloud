@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!-- 基本信息 -->
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>spring-zipkin-server-inmemory</artifactId>
+  <name>全链路跟踪服务</name>
+  <description>保存在内容中</description>
+  
+  <!-- 父项目 -->
+  <parent>
+    <groupId>com.easystudy</groupId>
+    <artifactId>spring-zipkin-demon</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <!-- 项目强制依赖 -->
+  <dependencies>
+  	<!-- log4f-slf4j与logback库冲突：排除对应日志库，需要自己添加log4j-slf4j-impl-->
+  	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter</artifactId>
+		<exclusions>
+            <exclusion>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-logging</artifactId>
+            </exclusion>
+        </exclusions>
+	</dependency>
+	<dependency>
+		<groupId>io.zipkin.java</groupId>
+		<artifactId>zipkin-server</artifactId>
+		<version>2.9.4</version>
+	</dependency>
+	<dependency>
+		<groupId>io.zipkin.java</groupId>
+		<artifactId>zipkin-autoconfigure-ui</artifactId>
+		<version>2.9.4</version>
+	</dependency>
+  </dependencies>
+	
+</project>

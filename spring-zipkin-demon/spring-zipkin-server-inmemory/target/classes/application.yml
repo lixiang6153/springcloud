@@ -1,0 +1,28 @@
+#服务器端口配置
+server:
+  port: 8672
+  
+spring:
+  application:
+    #应用名称
+    name: zipkin-server
+
+#不指定类型，默认存储在内存中
+#zipkin:
+#  storage:
+#    #存储类型为mysql
+#    type: mysql
+    
+#spring cloud也提供了spring-cloud-sleuth来方便集成zipkin实现
+#这里表示当前程序不使用sleuth
+#生产过程中调用数据量非常的大，mysql存储并不是很好的选择，
+#这时我们可以采用elasticsearch进行存储
+#sleuth:
+#  enabled: false
+     
+#去除控制台异常
+management: 
+  metrics: 
+    web: 
+      server: 
+        auto-time-requests: false
