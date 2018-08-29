@@ -1,0 +1,117 @@
+#服务配置
+server:
+  #监听端口
+  port: 8764
+
+spring:
+  application:
+    #服务名称
+    name: user-service
+  #jpa注解持久化配置
+  jpa:
+    #数据库类型
+    database: MYSQL
+    #显示sql
+    show-sql: true
+    #格式化sql
+    format-sql: true
+    #hibernate配置
+    hibernate: 
+      #create-drop、create、update、validate
+      ddl-auto: update
+      #本地sql语言
+      dialect: org.hibernate.dialect.MySQL5Dialect
+    #数据库连接池druid
+    druid: 
+      #数据库连接URL
+      url: jdbc:mysql://localhost:3306/zuul-auth?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      #连接用户名
+      username: root
+      #连接密码
+      password: root
+      #使用驱动名
+      driver-class-name: com.mysql.jdbc.Driver
+      # 连接池配置----------------------
+      #初始连接池大小
+      initial-size: 5
+      #最小闲置连接
+      min-idle: 5
+      #最大活动连接大小
+      max-active: 20
+      #配置获取连接等待超时的时间
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      # 验证连接有效性
+      validation-query: SELECT 'x'
+      validation-query-timeout: 6
+      #申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+      test-while-idle: true
+      #这里建议配置为TRUE，防止取到的连接不可用。获取链接的时候，不校验是否可用，开启会有损性能
+      test-on-borrow: false
+      #归还链接到连接池的时候校验链接是否可用
+      test-on-return: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小 
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      filters: stat,wall,log4j
+      #慢SQL记录:开启合并sql、开启慢查询语句,5000毫秒
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      ######Druid监控配置#######
+      #可以更好的对sql性能进行监控
+      #IP:port/项目名/druid/index.html 或sql.html，可以看到各种监控
+      #druid默认配置登录拦截页面：如上，用户名和密码都是druid，拦截了/druid/*
+      
+#eureka集群配置
+eureka:
+  instance:
+    #将IP注册到Eureka Server上,如果不配置就是机器的主机名
+    prefer-ip-address: true
+    #实例名定义为："ip:port" 如果spring.cloud.client.ipAddress获取不到则使用spring.cloud.client.ip_address
+    #instance-id: ${spring.cloud.client.ip_address}:${server.port}
+    #隔多久去拉取服务注册信息，m默认30s
+    registry-fetch-interval-seconds: 30
+    #client发送心跳给server端的频率，m默认30s,如果server端leaseExpirationDurationInSeconds
+    #后没有收到client的心跳，则将摘除该instance
+    lease-renewal-interval-in-seconds: 10
+    #表示eureka server至上一次收到client的心跳之后，等待下一次心跳的超时时间，
+    #在这个时间内若没收到下一次心跳，则将移除该instance，默认是90秒
+    lease-expiration-duration-in-seconds: 30
+  #eureka客户端配置
+  client:
+      #注册到eureka服务器地址
+      service-url:
+        #可以配置多个
+        #defaultZone: http://mss-eureka1:9010/eureka/,http://mss-eureka2:9011/eureka/
+        defaultZone: http://localhost:8761/eureka/
+
+# =====================Spring Boot Actuator:监控系统配置=====================
+endpoints:
+  health:
+    sensitive: false
+    enabled: true
+  shutdown:
+    #Spring Boot Actuator的shutdown endpoint默认是关闭的
+    enabled: true
+    #自定义api地址：host:port/shutdown就可以实现优雅停机
+    path: /shutdown
+    #使用密码验证-项目中添加的有Spring Security，所有通过HTTP暴露的敏感端点都会受到保护
+    #默认情况下会使用基本认证（basic authentication，用户名为user，密码为应用启动时在控制台打印的密码）
+    sensitive: true
+management:
+  security:
+    #刷新时，关闭安全验证
+    enabled: false
+# =====================Spring Boot Actuator:监控系统配置=====================
+
+#系统日志配置
+logging:
+  #日志路径
+  config: classpath:logback.xml
+  #不同组件的日志显示级别
+  level:
+    org:
+      springframework:
+        web: info

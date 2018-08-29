@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!-- 项目信息 -->
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>eureka-server</artifactId>
+  <name>eureka-server</name>
+  <description>eureka server project</description>
+  
+  <!-- 父级项目属性继承 -->
+  <parent>
+    <groupId>com.easystudy</groupId>
+    <artifactId>spring-cloud</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <!-- 项目依赖：特殊强制依赖，其他继承父亲 -->
+  <dependencies>
+  	  <!-- eureka服务器 -->
+      <dependency>
+          <groupId>org.springframework.cloud</groupId>
+          <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+      </dependency>
+      <!-- 增加安全验证支持 -->
+      <dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-security</artifactId>
+	  </dependency>
+  </dependencies>
+        
+</project>

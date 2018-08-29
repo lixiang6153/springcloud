@@ -1,0 +1,127 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!-- 基本信息 -->
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.easystudy</groupId>
+  <artifactId>spring-cloud-oauther2</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>spring-cloud-oauther2</name>
+  <description>spring-cloud-oauther2</description>
+  
+  <!-- 子模块列表-->
+  <modules>
+  	<module>spring-auth-common</module>
+  	<module>spring-auth-register</module>
+  	<module>spring-auth-server</module>
+  	<module>spring-auth-user-service</module>
+  </modules>
+  
+  <!-- spring boot项目 -->
+  <parent>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-parent</artifactId>
+      <version>2.0.2.RELEASE</version>
+      <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+  
+  <!-- 项目属性 -->
+  <properties>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+      <java.version>1.8</java.version>
+      <spring-cloud.version>Finchley.BUILD-SNAPSHOT</spring-cloud.version>
+      <lombok.version>1.16.20</lombok.version>
+  </properties>
+  
+  <!-- 项目依赖管理声明，统一管理项目依赖的版本信息，继承项目无需声明版本 -->
+  <dependencyManagement>
+      <dependencies>
+		<dependency>
+		    <groupId>org.springframework.cloud</groupId>
+		    <artifactId>spring-cloud-dependencies</artifactId>
+		    <version>${spring-cloud.version}</version>
+		    <type>pom</type>
+		    <scope>import</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+      </dependencies>
+  </dependencyManagement>
+  
+  <!-- 远程仓库：中央仓库找不到时候，从远程仓库中查找 -->
+  <repositories>
+      <repository>
+          <id>spring-snapshots</id>
+          <name>Spring Snapshots</name>
+          <url>https://repo.spring.io/snapshot</url>
+          <snapshots>
+              <enabled>true</enabled>
+          </snapshots>
+      </repository>
+      <repository>
+          <id>spring-milestones</id>
+          <name>Spring Milestones</name>
+          <url>https://repo.spring.io/milestone</url>
+          <snapshots>
+              <enabled>false</enabled>
+          </snapshots>
+      </repository>
+  </repositories>
+  
+  <!-- 项目依赖 -->
+  <dependencies>
+	<!-- spring web： springMVC依赖 -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-web</artifactId>
+	</dependency>
+	<!--spring boot测试-->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-test</artifactId>
+		<scope>test</scope>
+	</dependency>
+	<!-- 监控系统健康情况的工具 -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-actuator</artifactId>
+	</dependency>
+	<!-- 修改自动检测加载工具 -->
+    <dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-devtools</artifactId>
+		<optional>true</optional>
+	</dependency>
+	<!-- RESTFul接口文档：通过接口访问文档：http://localhost:8762/swagger-ui.html，8762为服务配置的监听端口，默认8080-->
+	<dependency>
+		<groupId>io.springfox</groupId>
+		<artifactId>springfox-swagger2</artifactId>
+		<version>2.2.2</version>
+	</dependency>
+	<dependency>
+		<groupId>io.springfox</groupId>
+		<artifactId>springfox-swagger-ui</artifactId>
+		<version>2.2.2</version>
+	</dependency>
+	<!--Lombok：消除模板代码-->
+	<dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+	</dependency>
+  </dependencies>
+	
+  <!-- 编译插件 -->
+  <build>
+      <plugins>
+      	  <!-- SpringBoot编译插件 -->
+          <plugin>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-maven-plugin</artifactId>
+          </plugin>
+      </plugins>
+  </build>
+  
+</project>

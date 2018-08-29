@@ -1,0 +1,32 @@
+# 第一个高可用注册中心
+server:
+  # 指定服务端口 
+  port: 8761
+    
+eureka:  
+  instance:  
+    hostname: localhost
+  client:
+    # 是否将eureka自身作为应用注册到eureka注册中心【这里设置为false，因为eureka服务和client不可能自己监听两套端口，serviceUrl可以天其他eureka服务地址，实现高可用】
+    registerWithEureka: false 
+    # 为true时，可以启动，但报异常：Cannot execute request on any known server 
+    fetchRegistry: false  
+    serviceUrl:  
+      # 引用对应值，通过配置其他可用的serviceUrl来实现相互注册【高可用配置】，这里可以实现本服务器注册到其他服务器去，实现服务器互为注册功能，达到两个或多个注册中心【即整个系统】的服务提供者信息共享
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    # 关闭自我保护--用于服务端
+    enable-self-preservation: false
+    # 服务器定时清理列表(毫秒)-eureka服务器默认30秒会刷新服务列表，将已经关闭的服务清除掉
+    eviction-interval-timer-in-ms: 5000
+    
+ # 监控系统配置
+endpoints:
+  shutdown:
+    #Spring Boot Actuator的shutdown endpoint默认是关闭的
+    enabled: true
+    #自定义api地址：host:port/shutdown就可以实现优雅停机
+    path: /shutdown
+    #使用密码验证-项目中添加的有Spring Security，所有通过HTTP暴露的敏感端点都会受到保护
+    #默认情况下会使用基本认证（basic authentication，用户名为user，密码为应用启动时在控制台打印的密码）
+    sensitive: false

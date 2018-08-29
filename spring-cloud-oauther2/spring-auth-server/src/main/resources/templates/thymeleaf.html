@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link th:src="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+<link th:src="@{/webjars/bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet"/>
+<script th:src="@{/webjars/jquery/jquery.min.js}" type="text/javascript"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" type="text/javascript"></script>
+<title>Thymeleaf Demo</title>
+</head>
+<body>
+      <hr/>
+      <div class="panel panel-primary">
+          <div class="panel-heading">
+              <h3 class="panel-title">访问model数据</h3>
+          </div>
+          <div class="panel-body">
+              <span th:text="${person.name}"></span>
+          </div>
+      </div>
+      <hr/>
+      <div th:if="${not #lists.isEmpty(people)}">
+          <div class="panel panel-primary">
+          <div class="panel-heading">
+              <h3 class="panel-title">遍历集合数据</h3>
+          </div>
+          <div class="panel-body">
+              <ul class="list-group">
+                  <li class="list-group-item" th:each="p:${people}">
+                      <span th:text="${p.name}"></span>
+                      <span th:text="${p.age}"></span>
+                      <button class="btn" th:onclick="'getName(\''+${p.name}+'\');'">
+                                                                   获取名字
+                      </button>
+                  </li>
+              </ul>
+          </div>
+      </div>
+      </div>
+      <script th:inline="javascript">
+          var person = [[${person}]];
+          console.log(person.name+"/"+person.age);
+          
+          function getName(name){
+            console.log(name);  
+          }
+      </script>
+</body>
+</html>

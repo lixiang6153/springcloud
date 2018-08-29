@@ -1,0 +1,97 @@
+在项目中配置多套环境的配置方法。
+因为现在一个项目有好多环境，开发环境，测试环境，准生产环境，生产环境，每个环境的参数不同，所以我们就可以把每个环境的参数配置到yml文件中，这样在想用哪个环境的时候只需要在主配置文件中将用的配置文件写上就行如下：
+
+spring:
+  profiles:
+    active: prod 
+这行配置在application.yml 文件中，意思是当前起作用的配置文件是application_prod.yml,其他的配置文件命名为 application_dev.yml,application_bat.yml等
+
+项目启动的时候也可以设置 Java -jar xxxxxx.jar spring.profiles.actiove=prod 也可以这样启动设置配置文件，但是这只是用于开发和测试。
+
+【客户端配置示例如下】
+
+# 多环境通用部分[各个环境可以覆盖通用字段]
+spring:  
+  application: 
+    # 通用名字,其他环境可以覆盖：为你的应用起个名字，该名字将注册到eureka注册中心
+    name: eureka-client
+  # 安全认证的配置--切记，此节点在spring节点之下，否则无法使用用户名密码登录
+  security: 
+    # eureka服务端启用安全验证后,服务端必须【添加一个安全认证类】，开启httpbasic方式登录【因为高版本已经启用这种方式】
+    user:
+      # 用户名
+      name: admin
+      # 密码
+      password: dw123456
+  profiles:
+    active: dev
+    
+---
+# 开发环境
+spring:
+  profiles: dev
+  application: 
+    # 开发环境名称：为你的应用起个名字，该名字将注册到eureka注册中心
+    name: eureka-client-dev
+server:  
+  # 服务提供监听端口[eureka客户端],注意改端口不能与本机服务器端口冲突
+  port: 8762
+eureka:
+  client:
+    # 是否将eureka自身作为应用注册到eureka注册中心,默认为true
+    registerWithEureka: true
+    service-url:
+      # 这里可以填写所有的eureka服务器地址并以','分离，当前面不能注册时候,自动选择后面的进行注册，排除单点故障问题
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:8761/eureka/
+  instance: 
+    #配置与服务器心跳间隔-用于客户端
+    lease-renewal-interval-in-seconds: 30
+    #配置服务超时时间(此值将设置为至少高于leaseRenewalIntervalInSeconds中指定的值)-用于客户端
+    #当服务关闭超过,这个时间时,eureka服务器会清除掉这个服务,配置此项要关闭服务器的自我保护模式-用于客户端
+    lease-expiration-duration-in-seconds: 60      
+---
+# 测试环境
+spring:
+  profiles: test
+  application: 
+    # 测试环境名称：为你的应用起个名字，该名字将注册到eureka注册中心
+    name: eureka-client-test
+server:  
+  # 服务提供监听端口[eureka客户端],注意改端口不能与本机服务器端口冲突
+  port: 8763
+eureka:
+  client:
+    # 是否将eureka自身作为应用注册到eureka注册中心,默认为true
+    registerWithEureka: true
+    service-url:
+      # 这里可以填写所有的eureka服务器地址并以','分离，当前面不能注册时候,自动选择后面的进行注册，排除单点故障问题
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:8761/eureka/
+  instance: 
+    #配置与服务器心跳间隔-用于客户端
+    lease-renewal-interval-in-seconds: 30
+    #配置服务超时时间(此值将设置为至少高于leaseRenewalIntervalInSeconds中指定的值)-用于客户端
+    #当服务关闭超过,这个时间时,eureka服务器会清除掉这个服务,配置此项要关闭服务器的自我保护模式-用于客户端
+    lease-expiration-duration-in-seconds: 60  
+---
+# 生产环境
+spring:
+  profiles: prod
+  application: 
+    # 生产环境名称：为你的应用起个名字，该名字将注册到eureka注册中心
+    name: eureka-client-prod
+server:  
+  # 服务提供监听端口[eureka客户端],注意改端口不能与本机服务器端口冲突
+  port: 8764
+eureka:
+  client:
+    # 是否将eureka自身作为应用注册到eureka注册中心,默认为true
+    registerWithEureka: true
+    service-url:
+      # 这里可以填写所有的eureka服务器地址并以','分离，当前面不能注册时候,自动选择后面的进行注册，排除单点故障问题
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:8761/eureka/
+  instance: 
+    #配置与服务器心跳间隔-用于客户端
+    lease-renewal-interval-in-seconds: 30
+    #配置服务超时时间(此值将设置为至少高于leaseRenewalIntervalInSeconds中指定的值)-用于客户端
+    #当服务关闭超过,这个时间时,eureka服务器会清除掉这个服务,配置此项要关闭服务器的自我保护模式-用于客户端
+    lease-expiration-duration-in-seconds: 60

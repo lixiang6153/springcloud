@@ -1,0 +1,148 @@
+server:
+  # 指定服务端口 
+  port: 8761
+# 安全认证的配置
+security:
+  basic:
+    enabled: true
+  user:
+    # 用户名
+    name: admin  
+    # 密码
+    password: dw123456
+    # 角色
+    role: SUPERUSER   
+server:
+  port: 8761
+spring:
+  profiles: eureka-colony1
+eureka:
+  instance:
+    hostname: eureka-colony1
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    # 注意，这里可以实现本服务器注册到其他服务器去，实现服务器互为注册功能，实现服务器整个系统服务提供信息共享
+    serviceUrl:
+      defaultZone: http://admin:admin@192.168.1.108:8762/eureka/
+  server:
+    # 关闭自我保护
+    enable-self-preservation: false
+    # 清理服务器
+    eviction-interval-timer-in-ms: 60000
+
+# 日志输出
+logging:
+  file: log-tms-eureka1/logger.log
+  level:
+    org.springframework.web: DEBUG
+
+# 监控系统配置
+endpoints:
+    restart:
+        enabled: true
+    shutdown:
+        enabled: true
+    health:
+        sensitive: false
+
+# 关闭项目的安全验证
+security:
+  user:
+    name: admin
+    password: admin
+    role: SUPERUSER
+
+# 配置关闭程序的路径
+management:
+  context-path: /tms-eureka
+  security:
+    roles: SUPERUSER #角色
+  port: 8761 # 指定端口
+  address: 192.168.1.108 # 指定地址
+
+---
+
+server:
+  port: 8762
+spring:
+  profiles: eureka-colony2
+eureka:
+  instance:
+    hostname: eureka-colony2
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://admin:admin@192.168.1.108:8761/eureka/
+  server:
+    # 关闭自我保护
+    enable-self-preservation: false
+    # 清理服务器
+    eviction-interval-timer-in-ms: 60000
+
+# 日志输出
+logging:
+  file: log-tms-eureka2/logger.log
+  level:
+    org.springframework.web: DEBUG
+
+# 关闭程序
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: true
+
+# 关闭项目的安全验证
+security:
+  user:
+    name: admin
+    password: admin
+    role: SUPERUSER
+
+# 自定义管理服务器的上下文路径
+management:
+  context-path: /tms-eureka
+  security:
+  	enabled: false	 #使用启用安全管理策略
+    roles: SUPERUSER #角色
+  #自定义服务器的服务器的ip和地址
+  port: 8762 # 指定端口
+  address: 192.168.1.108 # 指定地址
+  
+端点
+执行器端点允许你监控应用及与应用进行交互。Spring Boot包含很多内置的端点，你也可以添加自己的。例如，health端点提供了应用的基本健康信息。
+端点暴露的方式取决于你采用的技术类型。大部分应用选择HTTP监控，端点的ID映射到一个URL。例如，默认情况下，health端点将被映射到/health。
+下面的端点都是可用的：
+
+ID			描述										敏感（Sensitive）
+autoconfig	显示一个auto-configuration的报告，该报告展示所有auto-configuration候选者及它们被应用或未被应用的原因	true
+beans		显示一个应用中所有Spring Beans的完整列表			true
+configprops	显示一个所有@ConfigurationProperties的整理列表	true
+dump		执行一个线程转储								true
+env			暴露来自Spring　ConfigurableEnvironment的属性	true
+health		展示应用的健康信息（当使用一个未认证连接访问时显示一个简单的’status’，使用认证连接访问则显示全部信息详情）	false
+info		显示任意的应用信息							false
+metrics		展示当前应用的’指标’信息						true
+mappings	显示一个所有@RequestMapping路径的整理列表		true
+shutdown	允许应用以优雅的方式关闭（默认情况下不启用）			true
+trace		显示trace信息（默认为最新的一些HTTP请求）			true
+
+实例：
+
+（1）在application.properties开启shutdown endpoint（默认关闭）
+#开启shutdown
+endpoints.shutdown.enabled=true
+#自定义api地址
+endpoints.shutdown.path=/shutdown
+（2）对/admin目录开启密码验证。
+endpoints.shutdown.sensitive=true
+security.basic.enabled=true
+security.basic.path=/admin
+security.user.name=admin
+security.user.password=test
+
+management.security.roles=SUPERUSER
+management.port=19888
+management.context-path=/admin
+management.security.enabled=true

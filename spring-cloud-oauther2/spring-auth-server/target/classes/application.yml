@@ -1,0 +1,118 @@
+#服务配置
+server:
+  #监听端口
+  port: 8762
+  servlet: 
+    context-path: /auth
+
+spring:
+  application:
+    #服务名称
+    name: auth2.0-center
+  #分布式系统跟踪服务
+  zipkin:
+      base-url: http://localhost:8763
+  #数据源配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/zuul-auth?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  #redis配置
+  redis:
+    #redis地址
+    host: 127.0.0.1
+    #redis端口,默认6379
+    port: 6379
+    #redis校验密码
+    #password: 123456
+    #或者使用如下
+    #url: redis://localhost:6379
+    
+#eureka集群配置
+eureka:
+  instance:
+    #将IP注册到Eureka Server上,如果不配置就是机器的主机名
+    prefer-ip-address: true
+    #实例名定义为："ip:port" 如果spring.cloud.client.ipAddress获取不到则使用spring.cloud.client.ip_address
+    #instance-id: ${spring.cloud.client.ip_address}:${server.port}
+    #隔多久去拉取服务注册信息，m默认30s
+    registry-fetch-interval-seconds: 30
+    #client发送心跳给server端的频率，m默认30s,如果server端leaseExpirationDurationInSeconds
+    #后没有收到client的心跳，则将摘除该instance
+    lease-renewal-interval-in-seconds: 10
+    #表示eureka server至上一次收到client的心跳之后，等待下一次心跳的超时时间，
+    #在这个时间内若没收到下一次心跳，则将移除该instance，默认是90秒
+    lease-expiration-duration-in-seconds: 30
+  #eureka客户端配置
+  client:
+      #注册到eureka服务器地址
+      service-url:
+        #可以配置多个
+        #defaultZone: http://mss-eureka1:9010/eureka/,http://mss-eureka2:9011/eureka/
+        defaultZone: http://localhost:8761/eureka/
+
+# ----Spring Boot Actuator:监控系统配置
+endpoints:
+  health:
+    sensitive: false
+    enabled: false
+  shutdown:
+    #Spring Boot Actuator的shutdown endpoint默认是关闭的
+    enabled: true
+    #自定义api地址：host:port/shutdown就可以实现优雅停机
+    path: /shutdown
+    #使用密码验证-项目中添加的有Spring Security，所有通过HTTP暴露的敏感端点都会受到保护
+    #默认情况下会使用基本认证（basic authentication，用户名为user，密码为应用启动时在控制台打印的密码）
+    sensitive: true
+management:
+  security:
+    #刷新时，关闭安全验证
+    enabled: false
+# ----Spring Boot Actuator:监控系统配置
+
+#安全校验
+security:
+  oauth2:
+    resource:
+      #本来spring security的基础上使用了spring security oauth2，控制/api下的请求
+      #但是spring security的资源控制和spring securtiy oauth2的资源控制会互相覆盖
+      #如果配置添加了security.oauth2.resource.filter-order=3，则使用spring security的控制，反之则为oauth2的控制
+      filter-order: 3
+#系统日志配置
+logging:
+  #日志路径
+  config: classpath:logback.xml
+  #不同组件的日志显示级别
+  level:
+    org:
+      springframework:
+        web: info
+
+#feign 默认关闭熔断，请看HystrixFeignConfiguration
+feign:
+  hystrix:
+    #启用熔断机制
+    enabled: true
+#熔断配置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            #设置API网关中路由转发请求的HystrixCommand执行超时时间
+            #在zuul配置了熔断fallback的话，熔断超时也要配置，不然如果你配置的ribbon超时时间大于熔断的超时，那么会先走熔断，相当于你配的ribbon超时就不生效了
+            #这里面ribbon和hystrix是同时生效的，哪个值小哪个生效，另一个就看不到效果了
+            timeoutInMilliseconds: 60000
+            
+#ribbon负载均衡配置
+ribbon:
+  #设置路由转发请求的时候，创建请求连接的超时时间
+  ReadTimeout: 30000
+  #用来设置路由转发请求的超时时间
+  ConnectTimeout: 60000
+  # 最大重试次数
+  MaxAutoRetries: 2
+  # 重试下一服务次数[排除第一台服务器]
+  MaxAutoRetriesNextServer: 0

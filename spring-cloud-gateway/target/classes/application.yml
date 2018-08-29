@@ -1,0 +1,44 @@
+server:
+  port: 8888
+    
+spring:
+  application:
+    name: spring-cloud-gateway
+  cloud:
+    #gateway反向代理配置
+    gateway:
+      routes:
+      #一横开头表示数组，路由数组列表
+      #不同 id 对应不同的功能
+      #访问 http://localhost:8080/a/ 路由到 服务A http://localhost:8081/
+      #http://localhost:8080/a/user/all 路由到 服务A http://localhost:8081/user/all
+      - id: host_route1
+        #目标服务地址
+        uri: http://www.baidu.com/
+        #路由条件
+        predicates:
+        - Path=/a
+        #过滤规则
+        filters:
+        - StripPrefix=1
+      #http://localhost:8080/b/ 路由到 服务B http://localhost:8082/
+      - id: host_route2
+        #负载到哪一个服务器上
+        uri: http://localhost:8082/
+        predicates:
+        # -Before
+        # -After
+        # -Between
+        # - Cookie
+        - Path=/b/**
+        #过滤规则
+        filters:
+        #移除前缀/b
+        - StripPrefix=1
+
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: DEBUG

@@ -1,0 +1,105 @@
+server:
+  #监听端口
+  port: 8888
+  #servlet上下文根路径
+  servlet: 
+    #此时的gatewy是不起作用的，匹配路径为根路径
+    context-path: /gateway
+      
+spring:
+  application:
+    name: spring-cloud-gateway
+  #redis配置-限流存储
+  redis: 
+    #单台主机
+    host: 127.0.0.1
+    port: 6379
+    #redis集群配置
+    #cluster: 
+    #  nodes: ${redis.host.cluster}
+    #  password: ${redis.password}
+    pool:
+      maxIdle: 300
+      minIdle: 100
+      max-wait: -1
+      max-active: 600
+  cloud:
+    #gateway反向代理配置
+    gateway:
+      routes:
+      #认证的http走这里
+      - id: service-a-1
+        #lb代表从注册中心获取服务，后面接的就是你需要转发到的服务名称，这个服务名称必须跟eureka中的对应
+        uri: lb://service-a
+        #路由条件
+        predicates:
+        - Path= /service-a/**
+        #权重路由
+        #- Weight=provide, 90
+        #过滤规则
+        filters:
+        - StripPrefix= 1
+      - id: service-a-2
+        #lb代表从注册中心获取服务，后面接的就是你需要转发到的服务名称，这个服务名称必须跟eureka中的对应
+        uri: lb://service-a
+        #路由条件
+        predicates:
+        - Path= /service-a/**
+        #权重路由
+        #- Weight=provide, 10
+        #过滤规则
+        filters:
+        - StripPrefix= 1
+        - name: ReteCheck
+          args:
+            #redis限流
+            redis-rate-limiter.replenishRate: 10 # 令牌桶的容积,希望允许用户每秒处理多少个请求，而不会丢失任何请求
+            redis-rate-limiter.burstCapacity: 20 # 用户允许在一秒钟内完成的最大请求数,这是令牌桶可以容纳的令牌的数量，将此值设置为零将阻止所有请求
+            #采用自定义配置限流，是引用名为ipKeyResolver的bean的SpEL表达式
+            #使用SpEL按名称引用bean见GatewayConfiguration或者不用SPEL直接指定bean名称，@Bean(name="hostKeyResolver")
+            key-resolver: "#{@ipKeyResolver}"
+            rate-limiter: "#{@myRateLimiter}"
+      #websocket走这里
+      - id: websocket
+        uri: lb:ws://websocket
+        #${server.servlet.context-path}/websocket/**
+        predicates:
+        - Path= /websocket/**
+        filters:
+        - StripPrefix= 1
+        
+# eureka配置
+eureka:
+  client:
+    #从eureka服务器获取注册表信息的频率（以秒为单位）-用于客户端
+    registry-fetch-interval-seconds: 10
+    # 是否将eureka自身作为应用注册到eureka注册中心,默认为true
+    registerWithEureka: true
+    service-url:
+      # 这里可以填写所有的eureka服务器地址并以','分离，当前面不能注册时候,自动选择后面的进行注册，排除单点故障问题
+      defaultZone: http://localhost:8761/eureka/
+  instance: 
+    #显示ip
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+    #配置与服务器心跳间隔-用于客户端
+    lease-renewal-interval-in-seconds: 30
+    #配置服务超时时间(此值将设置为至少高于leaseRenewalIntervalInSeconds中指定的值)-用于客户端
+    #当服务关闭超过,这个时间时,eureka服务器会清除掉这个服务,配置此项要关闭服务器的自我保护模式-用于客户端
+    lease-expiration-duration-in-seconds: 60
+    #客户端自定义数据元数据-给其他eureka客户端调用--用户客户端
+    metadata-map: 
+      #自定义元数据serverid
+      serverid: client_test
+      
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: DEBUG
+    #让hibernate打印出执行的SQL
+    #root: INFO
+    #org.hibernate: INFO
+    #org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    #org.hibernate.type.descriptor.sql.BasicExtractor: TRACE  

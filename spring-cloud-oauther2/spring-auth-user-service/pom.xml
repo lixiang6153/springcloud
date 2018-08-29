@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!-- 基本信息 -->
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>spring-auth-user-service</artifactId>
+  <name>oauth2 user service</name>
+  <description>oauth2用户服务</description>
+  
+  <!-- 父项目 -->
+  <parent>
+    <groupId>com.easystudy</groupId>
+    <artifactId>spring-cloud-oauther2</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <!-- 强依赖 -->
+  <dependencies>
+  	<!-- 公共信息包 -->
+  	<dependency>
+		<groupId>com.easystudy</groupId>
+		<artifactId>spring-auth-common</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+  	<!-- spring cloud 客户注册 -->
+	<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+	</dependency>
+	<!-- jpa注解 -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-data-jpa</artifactId>
+	</dependency>
+	<!-- mysql -->
+    <dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+	</dependency>
+	<!-- 阿里巴巴druid数据库连接池 -->	
+	<dependency>
+		<groupId>com.alibaba</groupId>
+		<artifactId>druid-spring-boot-starter</artifactId>
+		<version>1.1.10</version>
+	</dependency>
+	<!-- 配置文件读取与对象转换 -->
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-configuration-processor</artifactId>
+	    <optional>true</optional>
+	</dependency>
+	<!-- log4j -->
+	<dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.17</version>
+    </dependency>
+  </dependencies>
+</project>
