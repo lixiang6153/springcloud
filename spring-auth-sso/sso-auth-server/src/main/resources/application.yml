@@ -1,0 +1,12 @@
+server:
+  port: 8081
+  #访问路径是否添加前缀：上下文-同项目名
+  #http://localhost:8081/auth/login.html
+  #默认为空即：http://localhost:8081/login.html
+  servlet: 
+    context-path: /auth
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG

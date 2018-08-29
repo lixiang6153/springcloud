@@ -1,0 +1,19 @@
+-------------------------------------------------------------------------------
+Test set: cn.itsoruce.springboot.service.IUserServiceTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 5.19 sec <<< FAILURE! - in cn.itsoruce.springboot.service.IUserServiceTest
+testGetById(cn.itsoruce.springboot.service.IUserServiceTest)  Time elapsed: 0.001 sec  <<< FAILURE!
+java.lang.AssertionError: Not yet implemented
+	at org.junit.Assert.fail(Assert.java:88)
+	at cn.itsoruce.springboot.service.IUserServiceTest.testGetById(IUserServiceTest.java:43)
+
+testDelete(cn.itsoruce.springboot.service.IUserServiceTest)  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.AssertionError: Not yet implemented
+	at org.junit.Assert.fail(Assert.java:88)
+	at cn.itsoruce.springboot.service.IUserServiceTest.testDelete(IUserServiceTest.java:33)
+
+testUpdate(cn.itsoruce.springboot.service.IUserServiceTest)  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.AssertionError: Not yet implemented
+	at org.junit.Assert.fail(Assert.java:88)
+	at cn.itsoruce.springboot.service.IUserServiceTest.testUpdate(IUserServiceTest.java:38)
+

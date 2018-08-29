@@ -1,0 +1,81 @@
+一 springboot简介
+1.1 是什么？
+  springboot其实就是一些开发好的Maven模块，我们导入对应的模块就能做对应的事情。
+1.2 有什么用
+  Springboot是为了简化Spring项目开发.
+      简单而言，即Spring Boot使编码更简单，使配置更简单，使部署更简单，使监控更简单,使生活变得更美好。！
+1.3 场景的模块及使用场景
+  Spring Boot就是一些开发好了maven模块,只需导入对应模块就能做对应事情.
+	springmvc
+	spring jdbc
+ 	data jpa
+	spring-boot-start-mybatis mybatis  mybatis
+ 	spring-security
+	事务管理   service
+	spring-boot-start-test 测试
+	等等
+	Springboot没有引入新技术，就是把原来spring相关技术，进行maven模块封装，让我们使用起来更加简单。
+二 入门
+ 2.1 入门步骤
+   1）创建普通Maven项目
+   2）导入依赖
+   3）写App的普通类，并且把它标识SpringBoot应用，并且通过main函数完成启动。
+      @SpringBootApplication//标识该项目为springboot的应用
+		public class App {
+		
+			public static void main(String[] args) {
+				//启动springboot应用
+				//1)拉起一个内置Tomcat
+				//2)也会初始化一个Spring-原来手动配置web.xml,applicationContext-*.xml通通都自动配置
+				    //里面有一些默认的配置，比如springmvc mybatis 事务配置，等
+				//3)会把加了@SpringBootApplication的主键的类当前包，及其子子孙孙包，进行相关注解的扫描，
+				//把相关的bean纳入Spring管理
+				SpringApplication.run(App.class, args);
+			}
+		}
+	4）写一个Controller，启动测试
+  2.2 原理
+    //启动springboot应用
+	//1)拉起一个内置Tomcat
+	//2)也会初始化一个Spring-原来手动配置web.xml,applicationContext-*.xml通通都自动配置
+	    //里面有一些默认的配置，比如springmvc mybatis 事务配置，等
+	//3)会把加了@SpringBootApplication的主键的类当前包，及其子子孙孙包，进行相关注解的扫描，
+	//把相关的bean纳入Spring管理
+  2.3 热部署-devTools
+ 三 springBoot web-springMVC
+   @RestController= @Controller+ @ResponseBody
+   一个Controller既要返回页面，又要返回Json，有如下两种方式：
+ * 1)方式1-@Controller
+ *  页面: 返回String
+ *  json：@ResponseBody
+ * 2)方式2-@RestController（建议使用）
+ *  页面: ModelAndView
+ *  json：什么都不加
+ 
+ 四 三层架构
+  dao（没有做实现，只是打印）
+  service
+  junit
+  controller
+五 初始化
+  1）jdbc-JdbcTmplate
+  2）事务-@Transational
+  3）mybatis
+     xml版本
+             注解版本
+             返回自增id
+              分页插件
+            模块化开发
+  4）data jpa
+    1）基础
+    2）扩展
+ ========作业==============
+ 01_springboot_hello
+02_springboot_web
+03_springboot_3-tier
+04_springboot_ss-jdbc
+05_springboot_ss-m-xml
+06_springboot_ss-m-anno
+07_springboot_ss-m-modeler
+08_springboot_ss-spring-data-jpa
+09_springboot_ss-spring-data-jpa-extends

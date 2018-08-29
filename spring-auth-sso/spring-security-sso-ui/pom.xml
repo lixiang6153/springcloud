@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!-- 基本信息 -->
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>spring-security-sso-ui</artifactId>
+  <name>SSO ui</name>
+  <description>spring security sso ui</description>
+  
+  <!-- 父项目 -->
+  <parent>
+    <groupId>com.easystudy</groupId>
+    <artifactId>spring-auth-sso</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <!-- 项目强依赖 -->
+  <dependencies>
+  	<!-- 安全校验 -->
+	<dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-security</artifactId>
+	</dependency>
+	<!-- oauth2配置 -->
+	<dependency>
+        <groupId>org.springframework.security.oauth.boot</groupId>
+        <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+    </dependency>
+    <!-- 渲染模板 -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.thymeleaf.extras</groupId>
+        <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+    </dependency>   
+    <!-- Web前端资源打包jar文件：将Web前端Javascript和CSS等资源打包成Java的Jar包，这样在Java Web开发中我们可以借助Maven这些依赖库的管理，保证这些Web资源版本唯一性-->
+	<!-- href=/css/bootstrap.min.css可以替换成：href=/webjars/bootstrap/css/bootstrap.min.css-->
+	<!-- href=/jquery.min.js可以替换成：href=/webjars/jquery/jquery.min.js-->
+	<dependency>
+		<groupId>org.webjars</groupId>
+		<artifactId>angularjs</artifactId>
+		<version>1.4.3</version>
+	</dependency>
+	<!-- js -->
+	<dependency>
+		<groupId>org.webjars</groupId>
+		<artifactId>jquery</artifactId>
+		<version>2.1.1</version>
+	</dependency>
+	<!-- css -->
+	<dependency>
+		<groupId>org.webjars</groupId>
+		<artifactId>bootstrap</artifactId>
+		<version>3.2.0</version>
+	</dependency>
+	<!-- 省略 webjar的版本:http://localhost:8080/webjars/jquery/3.1.0/jquery.js路径中可以省略3.1.0 -->
+	<dependency>
+		<groupId>org.webjars</groupId>
+		<artifactId>webjars-locator</artifactId>
+		<version>0.32</version>
+	</dependency>     
+  </dependencies>
+</project>
